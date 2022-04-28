@@ -1,20 +1,23 @@
+from re import I
 import pygame
 from .projectile import Projectile
+from .obstacle import obstacle
 
-class player(pygame.sprite.Sprite):
+class player(obstacle):
 
-    def __init__(self):
+    def __init__(self, image, vecX, vecY):
         super().__init__()
         self.health = 4
         self.health_max = 4
         self.speed = 2
-        self.fire = 5
+        self.score = 0
+        self.maxScore = 0
         self.allProjectiles = pygame.sprite.Group()
-        self.image = pygame.image.load('GAME/source/vaiseauV3.png')
+        self.image = image
         self.image = pygame.transform.scale(self.image, (50, 50))
         self.rect = self.image.get_rect()
-        self.rect.x = 400
-        self.rect.y = 400
+        self.rect.x = vecX
+        self.rect.y = vecY
         self.original_image = self.image
         self.angle = 0
 
