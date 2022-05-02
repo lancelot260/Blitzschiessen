@@ -10,7 +10,8 @@ pygame.display.update()
 backgroud = pygame.image.load('GAME/source/BG2V2.jpg')
 
 game = game()
-#charcher le jueour
+
+clock = pygame.time.Clock()
 
 
 open = True
@@ -35,6 +36,8 @@ while open:
                 game.J1.lightShoot()
             elif event.key == pygame.K_TAB:
                 game.J2.lightShoot()
+            elif event.key == pygame.K_RCTRL:
+                game.J1.dash(clock)
 
         elif event.type == pygame.KEYUP:
             game.pressed[event.key] = False        
