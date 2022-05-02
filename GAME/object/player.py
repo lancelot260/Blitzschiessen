@@ -7,7 +7,6 @@ class player(obstacle):
 
     def __init__(self, image, vecX, vecY):
         super().__init__()
-        self.health = 4
         self.health_max = 4
         self.speed = 2
         self.score = 0
@@ -16,7 +15,6 @@ class player(obstacle):
         self.allProjectiles = pygame.sprite.Group()
         self.image = image
         self.image = pygame.transform.scale(self.image, (50, 50))
-        self.rect = self.image.get_rect()
         self.rect.x = vecX
         self.rect.y = vecY
         self.original_image = self.image

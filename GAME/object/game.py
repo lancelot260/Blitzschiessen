@@ -11,6 +11,8 @@ class game:
         self.J1 = player(pygame.image.load('GAME/source/vaiseauV3.png'), 400, 400)
         self.J2 = player(pygame.image.load('GAME/source/J1vaiseauV2.png'), 400, 0)
         self.round = 0
+        self.J1Limite = 300
+        self.J2Limite = 200
         self.Obstacle = obstacle()
         self.pressed = {}
     
@@ -73,7 +75,7 @@ class game:
         
         if self.J1.health == 0 or self.J2.health == 0:
             print("new roud")
-            print("round: " + str(self.round))
+            print("round: " + str(self.round +1))
             self.J1.rect.x = 400
             self.J1.rect.y = 400
             self.J2.rect.x = 400
@@ -90,9 +92,11 @@ class game:
         
         if self.round == 3:
             print("game over")
+            print("J1 score: " + str(self.J1.score))
+            print("J2 score: " + str(self.J2.score))
             self.isPalying = False
 
-        if self.pressed.get(pygame.K_UP) and self.J1.rect.y > 0:
+        if self.pressed.get(pygame.K_UP) and self.J1.rect.y > self.J1Limite:
             self.J1.move_up()
         elif self.pressed.get(pygame.K_DOWN) and self.J1.rect.y < screen.get_height() - self.J1.rect.height:
             self.J1.move_down()
@@ -103,7 +107,7 @@ class game:
 
         if self.pressed.get(pygame.K_z) and self.J2.rect.y > 0:
             self.J2.move_up()
-        elif self.pressed.get(pygame.K_s) and self.J2.rect.y < screen.get_height() - self.J2.rect.height:
+        elif self.pressed.get(pygame.K_s) and self.J2.rect.y < self.J2Limite - self.J2.rect.height:
             self.J2.move_down()
         elif self.pressed.get(pygame.K_q) and self.J2.rect.x > 0:
             self.J2.move_left()
