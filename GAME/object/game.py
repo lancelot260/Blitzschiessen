@@ -1,5 +1,6 @@
 from importlib.resources import Package
 import pygame
+import random
 from .player import player
 from .obstacle import obstacle
 
@@ -13,11 +14,11 @@ class game:
         self.round = 0
         self.J1Limite = 300
         self.J2Limite = 200
-        self.Obstacle = obstacle()
+        self.AllObstacles = []
+        for _ in range(random.randint(5, 10)):
+            Obstacle = obstacle()
+            self.AllObstacles.append(Obstacle)
         self.pressed = {}
-    
-    def checkCollision(self, sprite, groupe):
-        return pygame.sprite.spritecollide(sprite, groupe, False, pygame.sprite.collide_mask)
     
     def update(self, screen):
 
@@ -25,7 +26,8 @@ class game:
 
         screen.blit(self.J2.image, self.J2.rect)
 
-        screen.blit(self.Obstacle.image, self.Obstacle.rect)
+        for i in self.AllObstacles:
+            screen.blit(i.image, i.rect)
 
         for projectile in self.J1.allProjectiles:
             projectile.move(1)
@@ -36,37 +38,34 @@ class game:
         self.J1.allProjectiles.draw(screen)
         self.J2.allProjectiles.draw(screen)
     
-        if pygame.sprite.spritecollide(self.Obstacle, self.J1.allProjectiles, False, pygame.sprite.collide_mask):
-            print("hit")
-            print(self.Obstacle.health)
-            self.Obstacle.gotHit()
-            self.J1.allProjectiles.empty()
-            if self.Obstacle.health == 0:
-                self.Obstacle.kill()
-                self.Obstacle.rect.x = 100000
-    
-        if pygame.sprite.spritecollide(self.Obstacle, self.J2.allProjectiles, False, pygame.sprite.collide_mask):
-            print("hit")
-            print(self.Obstacle.health)
-            self.Obstacle.gotHit()
-            self.J2.allProjectiles.empty()
-            if self.Obstacle.health == 0:
-                self.Obstacle.kill()
-                self.Obstacle.rect.x = 100000
+        for Obstacle in self.AllObstacles:
+            for projectile in self.J1.allProjectiles:
+                if pygame.sprite.collide_rect(projectile, Obstacle):
+                    print("hit obstacle")
+                    print(Obstacle.health)
+                    Obstacle.gotHit()
+                    self.J1.allProjectiles.empty()
+                    if Obstacle.health == 0:
+                        Obstacle.kill()
+                        Obstacle.rect.x = 100000
+            for projectile in self.J2.allProjectiles:
+                if pygame.sprite.collide_rect(projectile, Obstacle):
+                    print("hit obstacle")
+                    print(Obstacle.health)
+                    Obstacle.gotHit()
+                    self.J2.allProjectiles.empty()
+                    if Obstacle.health == 0:
+                        Obstacle.kill()
+                        Obstacle.rect.x = 100000
+                
 
         if pygame.sprite.spritecollide(self.J2, self.J1.allProjectiles, False, pygame.sprite.collide_mask):
-            print("hit")
-            print(self.J2.health)
             self.J1.score += 50
-            print("J1 score: " + str(self.J1.score))
             self.J2.gotHit()
             self.J1.allProjectiles.empty()
     
         if pygame.sprite.spritecollide(self.J1, self.J2.allProjectiles, False, pygame.sprite.collide_mask):
-            print("hit")
-            print(self.J1.health)
             self.J2.score += 50
-            print("J2 score: " + str(self.J2.score))
             self.J1.gotHit()
             self.J2.allProjectiles.empty()
 
@@ -76,6 +75,8 @@ class game:
         if self.J1.health == 0 or self.J2.health == 0:
             print("new roud")
             print("round: " + str(self.round +1))
+            print("J1 health: " + str(self.J1.health))
+            print("J2 health: " + str(self.J2.health))
             self.J1.rect.x = 400
             self.J1.rect.y = 400
             self.J2.rect.x = 400
@@ -85,7 +86,7 @@ class game:
             if self.J1.health == 0:
                 self.J1.health = 4
                 self.J2.score += 100
-            else:
+            elif self.J2.health == 0:
                 self.J2.health = 4
                 self.J1.score += 100
             self.round += 1

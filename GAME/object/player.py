@@ -8,6 +8,7 @@ class player(obstacle):
     def __init__(self, image, vecX, vecY):
         super().__init__()
         self.health_max = 4
+        self.health = self.health_max
         self.speed = 2
         self.score = 0
         self.maxScore = 0
