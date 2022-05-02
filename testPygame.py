@@ -23,7 +23,7 @@ while open:
     if game.isPalying:
         game.update(screen)
     else:
-        game.update(screen)
+        open = False
 
     pygame.display.flip()
     for event in pygame.event.get():

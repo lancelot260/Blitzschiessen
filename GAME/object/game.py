@@ -7,9 +7,10 @@ pygame.init()
 
 class game:
     def __init__(self):
-        self.isPalying = False
+        self.isPalying = True
         self.J1 = player(pygame.image.load('GAME/source/vaiseauV3.png'), 400, 400)
         self.J2 = player(pygame.image.load('GAME/source/J1vaiseauV2.png'), 400, 0)
+        self.round = 0
         self.Obstacle = obstacle()
         self.pressed = {}
     
@@ -69,17 +70,27 @@ class game:
 
         pygame.display.flip()
 
-        if self.J1.health == 0:
-            self.J2.maxScore = 100 + self.J2.score
-            self.J2.score = 0
-            print("J2 wins, and his score is: " + str(self.J2.maxScore))
-            open = False
-
-        if self.J2.health == 0:
-            self.J1.maxScore = 100 + self.J1.score
-            self.J1.score = 0
-            print("J1 wins, and his score is: " + str(self.J1.maxScore))
-            open = False
+        
+        if self.J1.health == 0 or self.J2.health == 0:
+            print("new roud")
+            print("round: " + str(self.round))
+            self.J1.rect.x = 400
+            self.J1.rect.y = 400
+            self.J2.rect.x = 400
+            self.J2.rect.y = 0
+            self.J1.allProjectiles.empty()
+            self.J2.allProjectiles.empty()
+            if self.J1.health == 0:
+                self.J1.health = 4
+                self.J2.score += 100
+            else:
+                self.J2.health = 4
+                self.J1.score += 100
+            self.round += 1
+        
+        if self.round == 3:
+            print("game over")
+            self.isPalying = False
 
         if self.pressed.get(pygame.K_UP) and self.J1.rect.y > 0:
             self.J1.move_up()
