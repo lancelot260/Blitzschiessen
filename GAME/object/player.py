@@ -1,9 +1,9 @@
 from asyncio import events
 import pygame
 from .projectile import Projectile
-from .obstacle import obstacle
+from .obstacle import Obstacle
 
-class player(obstacle):
+class Player(Obstacle):
 
     def __init__(self, image, vecX, vecY):
         super().__init__()

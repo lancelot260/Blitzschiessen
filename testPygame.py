@@ -1,7 +1,7 @@
 from shutil import move
 from turtle import Screen
 import pygame
-from GAME.object.game import game
+from GAME.object.game import Game
 
 pygame.init()
 
@@ -9,7 +9,7 @@ screen = pygame.display.set_mode((800, 480))
 pygame.display.update()
 backgroud = pygame.image.load('GAME/source/BG2V2.jpg')
 
-game = game()
+game = Game()
 
 clock = pygame.time.Clock()
 

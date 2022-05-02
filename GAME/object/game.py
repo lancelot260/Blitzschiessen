@@ -1,23 +1,23 @@
 from importlib.resources import Package
 import pygame
 import random
-from .player import player
-from .obstacle import obstacle
+from .player import Player
+from .obstacle import Obstacle
 
 pygame.init()
 
 class game:
     def __init__(self):
         self.isPalying = True
-        self.J1 = player(pygame.image.load('GAME/source/vaiseauV3.png'), 400, 400)
-        self.J2 = player(pygame.image.load('GAME/source/J1vaiseauV2.png'), 400, 0)
+        self.J1 = Player(pygame.image.load('GAME/source/vaiseauV3.png'), 400, 400)
+        self.J2 = Player(pygame.image.load('GAME/source/J1vaiseauV2.png'), 400, 0)
         self.round = 0
         self.J1Limite = 300
         self.J2Limite = 200
-        self.AllObstacles = []
+        self.allObstacles = []
         for _ in range(random.randint(5, 10)):
-            Obstacle = obstacle()
-            self.AllObstacles.append(Obstacle)
+            obstacle = Obstacle()
+            self.allObstacles.append(obstacle)
         self.pressed = {}
     
     def update(self, screen):
@@ -26,7 +26,7 @@ class game:
 
         screen.blit(self.J2.image, self.J2.rect)
 
-        for i in self.AllObstacles:
+        for i in self.allObstacles:
             screen.blit(i.image, i.rect)
 
         for projectile in self.J1.allProjectiles:
@@ -38,25 +38,25 @@ class game:
         self.J1.allProjectiles.draw(screen)
         self.J2.allProjectiles.draw(screen)
     
-        for Obstacle in self.AllObstacles:
+        for obstacle in self.allObstacles:
             for projectile in self.J1.allProjectiles:
-                if pygame.sprite.collide_rect(projectile, Obstacle):
+                if pygame.sprite.collide_rect(projectile, obstacle):
                     print("hit obstacle")
-                    print(Obstacle.health)
-                    Obstacle.gotHit()
+                    print(obstacle.health)
+                    obstacle.gotHit()
                     self.J1.allProjectiles.empty()
-                    if Obstacle.health == 0:
-                        Obstacle.kill()
-                        Obstacle.rect.x = 100000
+                    if obstacle.health == 0:
+                        obstacle.kill()
+                        obstacle.rect.x = 100000
             for projectile in self.J2.allProjectiles:
-                if pygame.sprite.collide_rect(projectile, Obstacle):
+                if pygame.sprite.collide_rect(projectile, obstacle):
                     print("hit obstacle")
-                    print(Obstacle.health)
-                    Obstacle.gotHit()
+                    print(obstacle.health)
+                    obstacle.gotHit()
                     self.J2.allProjectiles.empty()
-                    if Obstacle.health == 0:
-                        Obstacle.kill()
-                        Obstacle.rect.x = 100000
+                    if obstacle.health == 0:
+                        obstacle.kill()
+                        obstacle.rect.x = 100000
                 
 
         if pygame.sprite.spritecollide(self.J2, self.J1.allProjectiles, False, pygame.sprite.collide_mask):

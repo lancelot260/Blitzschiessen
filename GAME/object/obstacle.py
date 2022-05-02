@@ -2,7 +2,7 @@ import pygame
 import random
 
 
-class obstacle(pygame.sprite.Sprite):
+class Obstacle(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
         self.id = 0
