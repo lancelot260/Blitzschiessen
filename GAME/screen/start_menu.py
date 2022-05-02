@@ -23,9 +23,9 @@ class main_menu:
         self.prep_main_menu()
 
     def prep_main_menu(self):
-        #2.45 nous permet de centrer le bouton ne largeur
-        start_button = button('Start', math.ceil(self.screen.get_width()/2.45), 180, 'GAME/source/button_start_1.jpg')
-        setting_button = button('Settings', math.ceil(self.screen.get_width()/2.45), 270, 'GAME/source/button_settingV3.png')
+        #2.55 nous permet de centrer le bouton ne largeur
+        start_button = button('Start', math.ceil(self.screen.get_width()/2.55), 180, 'GAME/source/button_start_1.jpg')
+        setting_button = button('Settings', math.ceil(self.screen.get_width()/2.55), 270, 'GAME/source/button_settingV3.png')
         self.button_list.append(start_button)
         self.button_list.append(setting_button)
 
@@ -44,8 +44,11 @@ class main_menu:
 if __name__ == "__main__":
     pygame.init()
     screen = pygame.display.set_mode((800, 400))
+    bg_image = pygame.image.load('GAME/source/bg.jpg')
+    bg_image = pygame.transform.scale(bg_image, (800, 400))
     main_menu = main_menu(screen)
     while True:
+        screen.blit(bg_image, (0, 0))
         for event in pygame.event.get():
             main_menu.draw_main_menu()
             pygame.display.flip()
