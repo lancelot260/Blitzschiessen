@@ -19,6 +19,8 @@ class Player(Obstacle):
         self.rect.x = vecX
         self.rect.y = vecY
         self.original_image = self.image
+        self.lightammo = 1
+        self.heavyammo = 2
 
     def lightShoot(self):
         firepower = 1
@@ -28,7 +30,7 @@ class Player(Obstacle):
     def heavyShoot(self):
         firepower = 2
         speed = 0.5
-        self.allProjectiles.add(Projectile(self, firepower, speed,'GAME/source/heavyShootJ1.png'))
+        self.allProjectiles.add(Projectile(self, firepower, speed,'GAME/source/heavyShootJ1V2.png'))
 
     def move_up(self):
         self.rect.y -= self.speed

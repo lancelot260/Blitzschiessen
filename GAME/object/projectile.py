@@ -1,3 +1,4 @@
+from email.mime import image
 import pygame
 
 class Projectile(pygame.sprite.Sprite):

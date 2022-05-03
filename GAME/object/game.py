@@ -43,30 +43,30 @@ class game:
                 if pygame.sprite.collide_rect(projectile, obstacle):
                     print("hit obstacle")
                     print(obstacle.health)
-                    obstacle.gotHit()
+                    obstacle.gotHit(projectile.firepower)
                     self.J1.allProjectiles.empty()
-                    if obstacle.health == 0:
+                    if obstacle.health <= 0:
                         obstacle.kill()
                         obstacle.rect.x = 100000
             for projectile in self.J2.allProjectiles:
                 if pygame.sprite.collide_rect(projectile, obstacle):
                     print("hit obstacle")
                     print(obstacle.health)
-                    obstacle.gotHit()
+                    obstacle.gotHit(projectile.firepower)
                     self.J2.allProjectiles.empty()
-                    if obstacle.health == 0:
+                    if obstacle.health <= 0:
                         obstacle.kill()
                         obstacle.rect.x = 100000
                 
 
         if pygame.sprite.spritecollide(self.J2, self.J1.allProjectiles, False, pygame.sprite.collide_mask):
             self.J1.score += 50
-            self.J2.gotHit()
+            self.J2.gotHit(projectile.firepower)
             self.J1.allProjectiles.empty()
     
         if pygame.sprite.spritecollide(self.J1, self.J2.allProjectiles, False, pygame.sprite.collide_mask):
             self.J2.score += 50
-            self.J1.gotHit()
+            self.J1.gotHit(projectile.firepower)
             self.J2.allProjectiles.empty()
 
         pygame.display.flip()

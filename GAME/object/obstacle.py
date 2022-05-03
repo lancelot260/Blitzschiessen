@@ -15,8 +15,8 @@ class Obstacle(pygame.sprite.Sprite):
         self.rect.y = random.randint(200, 250)
         
     
-    def gotHit(self):
-        self.health -= 1
+    def gotHit(self, damage):
+        self.health -= damage
         if self.health == 0:
             self.kill()
 
