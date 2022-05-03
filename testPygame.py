@@ -1,7 +1,7 @@
 from shutil import move
 from turtle import Screen
 import pygame
-from GAME.object.game import Game
+from GAME.object.game import game
 
 pygame.init()
 
@@ -9,7 +9,7 @@ screen = pygame.display.set_mode((800, 480))
 pygame.display.update()
 backgroud = pygame.image.load('GAME/source/BG2V2.jpg')
 
-game = Game()
+game = game()
 
 clock = pygame.time.Clock()
 
@@ -37,7 +37,7 @@ while open:
             elif event.key == pygame.K_TAB:
                 game.J2.lightShoot()
             elif event.key == pygame.K_RCTRL:
-                game.J1.dash(clock)
+                game.J1.heavyShoot()
 
         elif event.type == pygame.KEYUP:
             game.pressed[event.key] = False        

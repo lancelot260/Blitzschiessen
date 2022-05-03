@@ -21,7 +21,14 @@ class Player(Obstacle):
         self.original_image = self.image
 
     def lightShoot(self):
-        self.allProjectiles.add(Projectile(self))  
+        firepower = 1
+        speed = 2
+        self.allProjectiles.add(Projectile(self, firepower, speed,'GAME/source/shootUpSpriteV2.png'))
+    
+    def heavyShoot(self):
+        firepower = 2
+        speed = 0.5
+        self.allProjectiles.add(Projectile(self, firepower, speed,'GAME/source/heavyShootJ1.png'))
 
     def move_up(self):
         self.rect.y -= self.speed
