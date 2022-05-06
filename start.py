@@ -1,75 +1,55 @@
 import pygame
+from GAME.screen.start_menu import main_menu
+from GAME.object.game import game
 
 
-# Define some colors.
-BLACK = pygame.Color('black')
-WHITE = pygame.Color('white')
+if __name__ == "__main__":
+    pygame.init()
 
-
-# This is a simple class that will help us print to the screen.
-# It has nothing to do with the joysticks, just outputting the
-# information.
-class TextPrint(object):
-    def __init__(self):
-        self.reset()
-        self.font = pygame.font.Font(None, 20)
-
-    def tprint(self, screen, textString):
-        textBitmap = self.font.render(textString, True, BLACK)
-        screen.blit(textBitmap, (self.x, self.y))
-        self.y += self.line_height
-
-    def reset(self):
-        self.x = 10
-        self.y = 10
-        self.line_height = 15
-
-    def indent(self):
-        self.x += 10
-
-    def unindent(self):
-        self.x -= 10
-
-
-pygame.init()
-
-
-screen = pygame.display.set_mode((500, 700))
-pygame.display.set_caption("My Game")
-done = False
-clock = pygame.time.Clock()
-pygame.joystick.init()
-textPrint = TextPrint()
-
-# -------- Main Program Loop -----------
-while not done:
-
-    for event in pygame.event.get(): # User did something.
-        if event.type == pygame.QUIT: # If user clicked close.
-            done = True # Flag that we are done so we exit this loop.
-        elif event.type == pygame.JOYBUTTONDOWN:
-            print("Joystick button pressed.")
-        elif event.type == pygame.JOYBUTTONUP:
-            print("Joystick button released.")
-
-    textPrint.reset()
-
-    joystick_count = pygame.joystick.get_count()
-
-    textPrint.tprint(screen, "Number of joysticks: {}".format(joystick_count))
-    textPrint.indent()
-
-    # For each joystick:
-    for i in range(joystick_count):
-        joystick = pygame.joystick.Joystick(i)
-        joystick.init()
-        
-        axes = pygame.joystick.Joystick(i).get_numaxes()
-        for i in range(axes):
-            axis = joystick.get_axis(i)
-            textPrint.tprint(screen, "Axis {} value: {:>6.3f}".format(i, axis))
-        textPrint.unindent()
-
+    screen = pygame.display.set_mode((800, 480))
+    bg_image = pygame.image.load('GAME/source/bg.jpg')
+    bg_image = pygame.transform.scale(bg_image, (800, 480))
+    start_menu = main_menu(screen)
+    screen.blit(bg_image, (0, 0))
     pygame.display.flip()
-    clock.tick(20)
-pygame.quit()
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+            if start_menu.check_main_menu_events(event):
+                if start_menu.check_main_menu_events(event)[1] == 'Start':
+                    start = True
+                    game = game()
+                    backgroud = pygame.image.load('GAME/source/BG2V2.jpg')
+                    clock = pygame.time.Clock()
+                    while start == True:
+                        screen.blit(backgroud, (0, 0))
+
+                        if game.isPalying:
+                            game.update(screen)
+                        else:
+                            start = False
+                        
+                        pygame.display.flip()
+                        for event in pygame.event.get():
+                            if event.type == pygame.QUIT:
+                                open = False
+                            elif event.type == pygame.KEYDOWN:
+                                game.pressed[event.key] = True
+
+                                if event.key == pygame.K_SPACE:
+                                    game.J1.lightShoot()
+                                elif event.key == pygame.K_TAB:
+                                    game.J2.lightShoot()
+                                elif event.key == pygame.K_RCTRL:
+                                    game.J1.dash(clock)
+
+                            elif event.type == pygame.KEYUP:
+                                game.pressed[event.key] = False  
+
+                elif start_menu.check_main_menu_events(event)[1] == 'Settings':
+                    print('Settings')
+
+            start_menu.draw_main_menu()
+            pygame.display.flip()

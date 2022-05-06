@@ -49,9 +49,9 @@ class main_menu:
 
 if __name__ == "__main__":
     pygame.init()
-    screen = pygame.display.set_mode((800, 400))
+    screen = pygame.display.set_mode((800, 480))
     bg_image = pygame.image.load('GAME/source/bg.jpg')
-    bg_image = pygame.transform.scale(bg_image, (800, 400))
+    bg_image = pygame.transform.scale(bg_image, (800, 480))
     main_menu = main_menu(screen)
     while True:
         screen.blit(bg_image, (0, 0))

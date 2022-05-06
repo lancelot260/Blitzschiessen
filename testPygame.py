@@ -2,6 +2,7 @@ from shutil import move
 from turtle import Screen
 import pygame
 from GAME.object.game import game
+from GAME.screen.start_menu import main_menu
 
 pygame.init()
 
