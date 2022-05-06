@@ -1,13 +1,14 @@
 from asyncio import events
 import pygame
 from .projectile import Projectile
-from .obstacle import obstacle
+from .obstacle import Obstacle
 
-class player(obstacle):
+class Player(Obstacle):
 
     def __init__(self, image, vecX, vecY):
         super().__init__()
         self.health_max = 4
+        self.health = self.health_max
         self.speed = 2
         self.score = 0
         self.maxScore = 0
@@ -18,9 +19,18 @@ class player(obstacle):
         self.rect.x = vecX
         self.rect.y = vecY
         self.original_image = self.image
+        self.lightammo = 1
+        self.heavyammo = 2
 
     def lightShoot(self):
-        self.allProjectiles.add(Projectile(self))  
+        firepower = 1
+        speed = 2
+        self.allProjectiles.add(Projectile(self, firepower, speed,'GAME/source/shootUpSpriteV2.png'))
+    
+    def heavyShoot(self):
+        firepower = 2
+        speed = 0.5
+        self.allProjectiles.add(Projectile(self, firepower, speed,'GAME/source/heavyShootJ1V2.png'))
 
     def move_up(self):
         self.rect.y -= self.speed
