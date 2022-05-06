@@ -29,6 +29,8 @@ class main_menu:
         self.button_list.append(start_button)
         self.button_list.append(setting_button)
 
+
+
     def check_main_menu_events(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
             mouse_x, mouse_y = pygame.mouse.get_pos()
@@ -38,6 +40,10 @@ class main_menu:
         return False
 
     def draw_main_menu(self):
+
+        police = pygame.font.SysFont(None, 48)
+        text = police.render('BlitzShissen', True, (255, 255, 255))
+        self.screen.blit(text, (math.ceil(self.screen.get_width()/2.70), 50))
         for button in self.button_list:
             self.screen.blit(button.sprite, button.rect)
 
