@@ -42,7 +42,9 @@ if __name__ == "__main__":
                         screen.blit(backgroud, (0, 0))
 
                         if game.isPalying:
+                            game.update(screen)
 
+                        else:
                             resultat = game.end()
                             game_controller.create_game(create_connection("migration.db"),'blue', 'red', resultat[0], resultat[1])
                             if game.J1.score > game.J2.score:
@@ -63,13 +65,12 @@ if __name__ == "__main__":
 
                             if end.check_end_screen_events(event):
                                 if end.check_end_screen_events(event)[1] == 'Quit':
-                                    start = False
+                                    game.isPalying = False
                                     pygame.quit()
                                     quit()
                                 if end.check_end_screen_events(event)[1] == 'Restart':
-                                    start = True
-
-                        else:
+                                    game.isPalying = True
+                                    del game
                             bg_image = pygame.image.load('GAME/source/bg.jpg')
                             bg_image = pygame.transform.scale(bg_image, (800, 480))
                             screen.blit(bg_image, (0, 0))

@@ -96,7 +96,7 @@ class game:
         
         if self.round == 3:
             self.isPalying = False
-            self.end(self)
+            self.end()
             
 
         if self.pressed.get(pygame.K_UP) and self.J1.rect.y > self.J1Limite:
