@@ -31,6 +31,13 @@ class game_controller:
         print("game score2: ", row[4])
 
     @staticmethod
+    def get_best_game(conn):
+        sql = ''' SELECT * FROM game ORDER BY score1 OR score2 DESC LIMIT 5 '''
+        cur = conn.cursor()
+        cur.execute(sql)
+        return cur.fetchall()
+
+    @staticmethod
     def update_game(conn, id, joueur1, joueur2, score1, score2):
         sql = ''' UPDATE game
                   SET joueur1=?, joueur2=?, score1=?, score2=?
