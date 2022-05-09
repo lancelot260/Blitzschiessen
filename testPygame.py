@@ -38,7 +38,7 @@ while open:
             elif event.key == pygame.K_TAB:
                 game.J2.lightShoot()
             elif event.key == pygame.K_RCTRL:
-                game.J1.dash(clock)
+                game.J1.heavyShoot()
 
         elif event.type == pygame.KEYUP:
             game.pressed[event.key] = False        
