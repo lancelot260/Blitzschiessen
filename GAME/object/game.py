@@ -20,6 +20,9 @@ class game:
             self.allObstacles.append(obstacle)
         self.pressed = {}
     
+    def end(self):
+        return self.J1.score, self.J2.score
+
     def update(self, screen):
 
         screen.blit(self.J1.image, self.J1.rect)
@@ -92,10 +95,9 @@ class game:
             self.round += 1
         
         if self.round == 3:
-            print("game over")
-            print("J1 score: " + str(self.J1.score))
-            print("J2 score: " + str(self.J2.score))
             self.isPalying = False
+            self.end()
+            
 
         if self.pressed.get(pygame.K_UP) and self.J1.rect.y > self.J1Limite:
             self.J1.move_up()
