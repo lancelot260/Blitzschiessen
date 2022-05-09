@@ -7,7 +7,7 @@ if __name__ == "__main__":
     pygame.init()
 
     screen = pygame.display.set_mode((800, 480))
-    bg_image = pygame.image.load('GAME/source/bg.jpg')
+    bg_image = pygame.image.load('GAME/source/BG2V2.jpg')
     bg_image = pygame.transform.scale(bg_image, (800, 480))
     start_menu = main_menu(screen)
     screen.blit(bg_image, (0, 0))
